@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Verification Form</title>
+<style>
+.error {
+	background-color: red;
+}
+</style>
+</head>
+<body>
+
+<h1>Validation Form</h1>
+
+	<form>
+		<label>Name</label><br><input type='text' id='userNameGet'><br> 
+		<label>Surname</label><br><input type='text' id='userSurnameGet'><br> 
+		<label>Age</label><br><input type='text' id='userAgeGet'><br> 
+		<label>Address</label><br><input type='text' id='userAddressGet'><br>
+		<br><input type = 'button' value='Send By Get' onclick = 'sendDataByGetMethod()'>
+		<input type = 'button' value='Send By Post' onclick = 'sendDataByPostMethod()'>
+	</form>
+	
+<script>
+
+function sendDataByGetMethod(){
+	let userData ={
+			userName: document.getElementById('userNameGet').value,
+			userSurname:  document.getElementById('userSurnameGet').value,
+			userAge:  document.getElementById('userAgeGet').value,
+			userAddress: document.getElementById('userAddressGet').value,
+	};
+	
+	let element = userData.userAge;
+	if(!(isNaN(element)) && (element > 0 && element < 101)){
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', '/formGet?userName='+userData.userName+'&userSurname='+userData.userSurname + '&userAge='+userData.userAge +
+				'&userAddress='+userData.userAddress); 
+		xhr.setRequestHeader('Content-type', 'application/json');  
+		xhr.send();
+		
+		let div = document.querySelector('#userAgeGet');
+		div.classList.remove('error');
+		
+	}else{
+		console.log('Please Enter Correct Data');
+		let div = document.querySelector('#userAgeGet');
+		div.classList.add('error');
+	}
+}
+	
+function sendDataByPostMethod(){
+	let userData ={
+			userName: document.getElementById('userNameGet').value,
+			userSurname:  document.getElementById('userSurnameGet').value,
+			userAge:  document.getElementById('userAgeGet').value,
+			userAddress: document.getElementById('userAddressGet').value,
+	};	
+		
+	let element = userData.userAge;
+	console.log(element)
+	
+	if(!(isNaN(element)) && (element > 0 && element < 101)){
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open('POST', '/formPost'); 
+		xhr.setRequestHeader('Content-type', 'application/json');  
+		xhr.send(JSON.stringify(userData));
+		
+		let div = document.querySelector('#userAgeGet');
+		div.classList.remove('error');
+		
+	}else{
+		console.log('Please Enter Correct Data');
+		let div = document.querySelector('#userAgeGet');
+		div.classList.add('error');
+	}	
+}
+
+</script>	
+	
+	
+
+</body>
+</html>

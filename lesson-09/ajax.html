@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax - Node</title>
+</head>
+<body>
+
+<h1>Ajax Get method</h1>
+<form>
+	<label>Name</label><br><input type = 'text' id='userNameGet'><br>
+	<label>Age</label><br><input type = 'text' id='userAgeGet'>
+	<br><input type = 'button' value='send by Get' onclick = 'sendDataByGetMethod()'>
+</form>
+
+<h1>Ajax POST method</h1>
+<form>
+	<label>Name</label><br><input type = 'text' id='userNamePost'><br>
+	<label>Age</label><br><input type = 'text' id='userAgePost'>
+	<br><input type = 'button' value='send by Post' onclick = 'sendDataByPostMethod()'>
+</form>
+
+
+
+<script>
+
+function sendDataByGetMethod(){
+	let userData ={
+		userName: document.getElementById('userNameGet').value,
+		userAge:  document.getElementById('userAgeGet').value
+	};	
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', '/userGet?userName='+userData.userName+'&userAge='+userData.userAge); 
+	xhr.setRequestHeader('Content-type', 'application/json');  
+	xhr.send();
+}
+
+function sendDataByPostMethod(){
+	let userData ={
+			userName: document.getElementById('userNamePost').value,
+			userAge:  document.getElementById('userAgePost').value
+		};	
+	
+		let xhr = new XMLHttpRequest();
+		xhr.open('POST', '/userPost'); 
+		xhr.setRequestHeader('Content-type', 'application/json');  
+		xhr.send(JSON.stringify(userData));
+}
+</script>
+
+
+</body>
+</html>
+
